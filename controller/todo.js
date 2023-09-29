@@ -106,3 +106,20 @@ module.exports.CreateToDo = (async function (req, res) {
       return res.status(500).json({ error: 'Server error' });
     }
   };
+
+  module.exports.getOneToDO = async function (req, res) {
+    const { todoId } = req.params;
+    const oneToDo = await ToDo.findById(todoId);
+    if (!oneToDo) {
+      return res
+        .json({
+          msg: "Id dont exist",
+        })
+        .status(403);
+    }
+    return res
+      .json({
+        msg: oneToDo,  
+      })
+      .status(200);
+  };
