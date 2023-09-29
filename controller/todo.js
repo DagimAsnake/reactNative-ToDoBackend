@@ -23,3 +23,25 @@ module.exports.CreateToDo = (async function (req, res) {
       })
       .status(200);
   });
+
+
+  module.exports.getToDo = async function (req, res) {
+    try {
+        const todos = await ToDo.find({ checked: false }).sort({ createdAt: -1 });
+      const data = todos.map((todo) => ({
+        _id: todo._id,
+        title: todo.title,
+        description: todo.description,
+        checked: todo.checked
+      }));
+  
+      return res.status(200).json({
+        todos: data,
+      });
+    } catch (error) {
+      console.error('Error retrieving todo:', error);
+      return res.status(500).json({
+        error: 'Server error',
+      });
+    }
+  };
