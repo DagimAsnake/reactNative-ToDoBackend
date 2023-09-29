@@ -123,3 +123,21 @@ module.exports.CreateToDo = (async function (req, res) {
       })
       .status(200);
   };
+
+  module.exports.deleteToDo = async function(req, res) {
+    const { todoId } = req.params;
+  
+    try {
+      const todo = await ToDo.findById(todoId);
+  
+      if (!todo) {
+        return res.status(404).json({ msg: 'ToDo not found' });
+      }
+  
+      await ToDo.findByIdAndDelete(todoId);
+      return res.status(200).json({ msg: 'ToDo deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting ToDo:', error);
+      return res.status(500).json({ error: 'Server error' });
+    }
+  };

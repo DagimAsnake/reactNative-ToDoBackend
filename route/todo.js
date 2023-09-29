@@ -7,5 +7,6 @@ router.put('/check/:todoId', todoController.checkToDo)
 router.get('/done', todoController.getDoneToDo)
 router.put('/checkdone/:todoId', todoController.checkDoneToDo)
 router.get('/:todoId', todoController.getOneToDO)
+router.delete('/delete/:todoId', todoController.deleteToDo)
 
 module.exports = router;
