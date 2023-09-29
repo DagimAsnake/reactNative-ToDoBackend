@@ -141,3 +141,34 @@ module.exports.CreateToDo = (async function (req, res) {
       return res.status(500).json({ error: 'Server error' });
     }
   };
+
+  module.exports.updateToDo = async function (req, res) {
+    const { todoId } = req.params;
+
+    const data = req.body;
+    if (!(data.title && data.description && data.checked !== undefined && data.checked !== null && data.checked !== '')) {
+        return res.json({
+          msg: "Inputs are required",
+        });
+      }
+  
+    const updatedData = {
+        title: data.title,
+        description: data.description,
+        checked: data.checked,
+    }
+  
+    try {
+      const todo= await ToDo.findById(todoId);
+  
+      if (!todo) {
+        return res.status(404).json({ msg: 'ToDo not found' });
+      }
+  
+      await ToDo.findByIdAndUpdate(todoId, updatedData);
+      return res.status(200).json({ msg: 'ToDo updated successfully' });
+    } catch (error) {
+      console.error('Error updating blog:', error);
+      return res.status(500).json({ error: 'Server error' });
+    }
+  };
