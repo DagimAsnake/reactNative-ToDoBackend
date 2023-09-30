@@ -15,7 +15,9 @@ const ToDoSchema = new Schema({
         required: true,
         default: false
     }
-})
+},
+{ timestamps: true }
+)
 
 const ToDo = model("ToDo", ToDoSchema);
 module.exports = ToDo
